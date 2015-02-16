@@ -74,31 +74,52 @@ int bin_search(int m, int k, int i, int left, int right, vector<vii>& M){
 int main(){
 	int n,m,k;
 	cin >> n >> m >> k;
-	vii D(m, vi(n));
 	vector<vii> M(m, vii(n, vi(int(log(n))+6)));
 	REP(i,n){
 		REP(j, m){
-			cin >> D[j][i];
+			cin >> M[j][i][0];
 		}
 	}
 	REP(i, m){
 		REP(sz, int(log(n))+6){
+			if(sz == 0) continue;
 			REP(j, n){
-				if(sz == 0){
-					M[i][j][sz] = D[i][j];
-				} else{
-					if(j+pow(2,sz-1) >= n){
+				int pw = pow(2,sz-1);
+				if(j+ pw >= n){
+					M[i][j][sz] = M[i][j][sz-1];
+				}else{
+					if(M[i][j][sz-1] > M[i][j+pw][sz-1])
 						M[i][j][sz] = M[i][j][sz-1];
-					}else{
-						M[i][j][sz] = max(M[i][j][sz-1], M[i][j+pow(2,sz-1)][sz-1]);
-					}
+					else
+						M[i][j][sz] = M[i][j+pw][sz-1];
 				}
 			}
 		}
 	}
 	int max_num = 0;
 	vi max_shots(m, 0);
-	REP(i, n){
+	int i = 0;
+	int j = 1;
+	while(j <= n){
+		ll shots=0;
+		vi sv(m);
+		REP(r, m){
+			sv[r] = (ll)find_max(r, i,j,M);
+			shots += sv[r];
+		}
+		if(shots <= k){
+			if(j-i > max_num){
+				max_num = j-i;
+				max_shots = sv;
+			}
+			j++;
+		} else{
+			i++;
+			if(j <= i)
+				j = i+1;
+		}
+	}
+	/*REP(i, n){
 		int j = bin_search(m, k,i, i+1, n+1, M);
 		//if(i==0) cout << j << " " << find_max(0, i, j, M)<<endl;
 		ll shots=0;
@@ -111,7 +132,7 @@ int main(){
 			}
 			max_num = j-i;
 		}
-	}	
+	}	*/
 	//cout<<m<<endl;
 	REP(i, m){
 		cout << max_shots[i];
