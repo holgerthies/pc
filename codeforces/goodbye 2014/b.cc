@@ -34,14 +34,14 @@ int main(){
 	cin >> n;
 	vector<int> p(n);
 	vector<int> pos(n+2);
-	vector<vector<bool>> A(n, vector<bool>(n, false));
-	vector<vector<bool>> reachable(n, vector<bool>(n, false));
+	vector<vector<bool>> A(n+2, vector<bool>(n+2, false));
+	vector<vector<bool>> reachable(n+2, vector<bool>(n+2, false));
 	for(int i=0; i<n;i++){
 		cin >> p[i];
 		pos[p[i]] = i;
 	}
 	for(int i=0; i<n;i++){
-		string x;
+		string x(n, ' ');
 		cin >> x;
 		for(int j=0; j<n;j++){
 			A[i][j] = x[j]-'0';
@@ -57,8 +57,8 @@ int main(){
 			}
 		}
 	}
-	vector<int> ans(n, 0);
-	vector<bool> visited(n,false);
+	vector<int> ans(n+2, 0);
+	vector<bool> visited(n+2,false);
 	for(int i=1; i<=n;i++){
 		int j=pos[i];
 		for(int k=0;k<=n;k++){
