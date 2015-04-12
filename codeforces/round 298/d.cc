@@ -45,6 +45,33 @@ template <class T>
 void print(vector<T> v){ bool first=true; for(T x : v) { if(!first) cout << " "; first = false; cout << x; } cout << endl;}
 
 int main(){
-	
+	DRI(n);
+  set<pii> a;
+  vi count(1000000,0);
+  REP(i, n){
+    DRI(x);
+    a.insert(mp(x, i));
+    count[x]++;
+  }
+  int curr=0;
+  vi ans;
+  int in=0;
+  while(in < n){
+    while(count[curr] == 0){
+      curr -= 3;
+      if(curr < 0){
+        std::cout << "Impossible" << std::endl;
+        return 0;
+      }
+    }
+    auto it = a.lower_bound(mp(curr, 0));
+    ans.pb((*it).second+1);
+    a.erase(it);
+    count[curr]--;
+    curr++;
+    in++;
+  }
+  cout << "Possible" << endl;
+  print(ans);
 	return 0;
 }

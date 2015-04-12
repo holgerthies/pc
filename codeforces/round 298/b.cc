@@ -45,6 +45,27 @@ template <class T>
 void print(vector<T> v){ bool first=true; for(T x : v) { if(!first) cout << " "; first = false; cout << x; } cout << endl;}
 
 int main(){
-	
+	DRII(v1,v2);
+  DRII(t,d);
+  vii s(t+1, vi(1001, 0));
+  vector<vector<bool>> p(t+1, vector<bool>(1001, false));
+  p[0][v1] = true;
+  REP(i,  t){
+    REP(j, d+1){
+       REP(k, 1001){
+        if(p[i][k]){
+          if(k+j <= 1000){
+              p[i+1][k+j] = true;
+              s[i+1][k+j] = max(s[i+1][k+j], s[i][k]+k);
+          }
+          if(k-j >= 0){
+              p[i+1][k-j] = true;
+              s[i+1][k-j] = max(s[i+1][k-j], s[i][k]+k);
+          }
+        }
+       }
+    }
+  }
+  std::cout << s[t-1][v2]+v2 << std::endl;
 	return 0;
 }

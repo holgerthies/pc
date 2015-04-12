@@ -45,6 +45,22 @@ template <class T>
 void print(vector<T> v){ bool first=true; for(T x : v) { if(!first) cout << " "; first = false; cout << x; } cout << endl;}
 
 int main(){
-	
+  DRI(n);
+  ll A;
+  cin >> A;
+  vector<ll> d(n);
+  vector<ll> S(n+1, 0);
+  REP(rai, n) 
+  {
+    cin>>d[rai];
+    S[rai+1] = S[rai]+d[rai];
+  }
+  vector<ll> ans;
+  REP(i, n){
+    int num=max(0ll, d[i]-(A-n+1));
+    num += max(0ll, A-(S[n]-d[i]+1));
+    ans.pb(num);
+  }
+  print(ans);
 	return 0;
 }

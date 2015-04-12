@@ -45,6 +45,37 @@ template <class T>
 void print(vector<T> v){ bool first=true; for(T x : v) { if(!first) cout << " "; first = false; cout << x; } cout << endl;}
 
 int main(){
-	
+	DRI(n);
+  vi ans;
+  if(n == 1 || n==2){
+    std::cout << 1 << std::endl;
+    std::cout << 1 << std::endl;
+    return 0;
+  }
+  if(n == 3){
+    std::cout << 2 << std::endl;
+    cout << 1 << " " << 3 << endl;
+    return 0;
+  }
+  if(n == 4){
+    std::cout << 4 << std::endl;
+    cout << 2 << " " << 4 << " " << 1 << " " << 3 << endl;
+    return 0;
+  }
+  REP(i, n/2+1){
+    if(2*i+1 > n) break;
+    ans.pb(2*i+1);
+  }
+  if(n > 3)
+  {
+    REP(i, n/2){
+      if(abs(2*(i+1) - ans[len(ans)-1]) != 1)
+        ans.pb(2*(i+1));
+      else if(abs(2*(i+1) - ans[0]) != 1)
+        ans.insert(ans.begin(), 2*(i+1));
+    }
+  }
+  std::cout << len(ans) << std::endl;
+  print(ans);
 	return 0;
 }
